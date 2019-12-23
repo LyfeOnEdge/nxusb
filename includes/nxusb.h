@@ -31,7 +31,6 @@ typedef enum
     UsbMode_OpenDir                         = 0x30,
     UsbMode_ReadDir                         = 0x31,
     UsbMode_DeleteDir                       = 0x32,
-    UsbMode_DeleteDirRecursively            = 0x33,
     UsbMode_GetDirTotal                     = 0x34,
     UsbMode_GetDirTotalRecursively          = 0x35,
     UsbMode_RenameDir                       = 0x36,
@@ -64,6 +63,10 @@ typedef enum
     UsbReturnCode_FailedOpenFile        = 0x20,
     UsbReturnCode_FailedRenameFile      = 0x21,
     UsbReturnCode_FailedDeleteFile      = 0x22,
+    UsbReturnCode_FailedTouchFile       = 0x23,
+    UsbReturnCode_FailedToGetFileSize   = 0x24,
+    UsbReturnCode_FileNotOpen           = 0x25, // unsure how best to use this.
+    
 
     UsbReturnCode_FailedOpenDir         = 0x30,
     UsbReturnCode_FailedRenameDir       = 0x31,
@@ -229,5 +232,38 @@ void usb_close_file(void);
 /*
 *   Dir Functions.
 */
+
+//
+UsbRet usb_open_dir(const char *path);
+
+//
+UsbRet usb_delete_dir(const char *path);
+
+//
+UsbRet usb_rename_dir(const char *curr_name, const char *new_name);
+
+//
+UsbRet usb_touch_dir(const char *path);
+
+//
+UsbRet usb_get_dir_total_from_path(const char *path, uint64_t *out);
+
+//
+UsbRet usb_get_dir_total(uint64_t *out);
+
+//
+UsbRet usb_read_dir(usb_file_entry_t *out, size_t size);
+
+//
+UsbRet usb_get_dir_size(size_t *out);
+
+//
+UsbRet usb_get_dir_size_recursively(size_t *out);
+
+//
+UsbRet usb_get_dir_size_from_path(const char *path, size_t *out);
+
+//
+UsbRet usb_get_dir_size_recursively_from_path(const char *path, size_t *out);
 
 #endif
